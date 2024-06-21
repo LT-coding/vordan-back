@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('businesses', function (Blueprint $table) {
+        Schema::create('admin_accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name');
-            $table->timestamp('verified')->nullable();
-            $table->string('avatar')->nullable();
-            $table->uuid('referral_code');
-            $table->bigInteger('referral')->default(0);
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('name');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('businesses');
+        Schema::dropIfExists('admin_accounts');
     }
 };
