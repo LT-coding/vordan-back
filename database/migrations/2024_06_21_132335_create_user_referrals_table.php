@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('user_referrals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('name');
-            $table->date('date_of_birth')->nullable();
-            $table->enum('gender', ['m', 'f'])->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('referral_user_id')->nullable()->constrained('users');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('referrals');
     }
 };

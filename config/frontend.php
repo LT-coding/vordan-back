@@ -10,4 +10,9 @@ return [
      * Admin management dashboard url.
      */
     'admin_management' => env('FRONTEND_ADMIN_MANAGEMENT_URL', 'http://127.0.0.1:3000'),
+
+    /**
+     * Business dashboard url.
+     */
+    'business' => env('FRONTEND_BUSINESS_URL', 'http://127.0.0.1:3000')
 ];

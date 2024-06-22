@@ -6,11 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\AdminManagement\Admin\AdminStoreUpdateRequest;
 use App\Mail\AdminManagement\Admin\AdminCreatedMail;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,7 +36,9 @@ class AdminWriteController extends Controller
             'password' => $password
         ]));
 
-        return response('', Response::HTTP_CREATED)->json(['id' => $user->id]);
+        cache()->forget('admins');
+
+        return response()->json(['id' => $user->id]);
     }
 
     /**
@@ -53,27 +53,11 @@ class AdminWriteController extends Controller
         $data = $request->validated();
         $user->update($data);
         $user->adminAccount()->update($data);
+        $user->syncRoles([$data['role']]);
+
+        cache()->forget('admins');
 
         return response()->noContent(Response::HTTP_OK);
-    }
-
-    /**
-     * Update admin's role.
-     *
-     * @param User $user
-     * @param Request $request
-     * @return Response
-     */
-    public function updateRole(User $user, Request $request): Response
-    {
-        if ($request->user('sanctum')->hasRole('admin') || ($request->user('sanctum')->hasRole('admin') || $request->user->id == $request->user('sanctum')->id)) {
-            $data = $request->validate([
-                'role' => ['required', Rule::exists('roles', 'name'), Rule::in(['admin', 'manager', 'accountant'])]
-            ]);
-            $user->syncRoles([$data['role']]);
-            return response()->noContent(Response::HTTP_OK);
-        }
-        return response()->noContent(Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -86,6 +70,7 @@ class AdminWriteController extends Controller
     {
         $user->adminAccount()->delete();
         $user->delete();
+        cache()->forget('admins');
         return response()->noContent(Response::HTTP_OK);
     }
 }

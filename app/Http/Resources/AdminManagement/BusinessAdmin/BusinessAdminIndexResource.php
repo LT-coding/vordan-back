@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\AdminManagement\Admin;
+namespace App\Http\Resources\AdminManagement\BusinessAdmin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AdminIndexResource extends JsonResource
+class BusinessAdminIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,10 @@ class AdminIndexResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $user = $this->user ?? $this;
         return [
             'id' => $this->id,
-            'phone' => $user->phone,
-            'email' => $user->email,
             'name' => $this->name,
-            'role' => $user->getRoleNames()
+            'email' => $this->email
         ];
     }
 }

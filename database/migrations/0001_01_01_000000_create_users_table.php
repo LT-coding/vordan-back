@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
+            $table->string('name')->nullable();
+            $table->uuid('referral_code')->nullable();
+            $table->bigInteger('referral_bonus')->default(0)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->softDeletes();

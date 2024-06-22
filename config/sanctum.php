@@ -21,6 +21,7 @@ return [
         Sanctum::currentApplicationUrlWithPort(),
         env('FRONTEND_LANDING_URL') ? ','.parse_url(env('FRONTEND_LANDING_URL'), PHP_URL_HOST) : '',
         env('FRONTEND_ADMIN_MANAGEMENT_URL') ? ','.parse_url(env('FRONTEND_ADMIN_MANAGEMENT_URL'), PHP_URL_HOST) : '',
+        env('FRONTEND_BUSINESS_URL') ? ','.parse_url(env('FRONTEND_BUSINESS_URL'), PHP_URL_HOST) : '',
     ))),
 
     /*

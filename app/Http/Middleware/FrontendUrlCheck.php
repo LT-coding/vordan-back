@@ -19,6 +19,7 @@ class FrontendUrlCheck
         $this->allowedUrls = [
             'landing' => config('frontend.landing'),
             'admin_management' => config('frontend.admin_management'),
+            'business' => config('frontend.business'),
         ];
     }
 

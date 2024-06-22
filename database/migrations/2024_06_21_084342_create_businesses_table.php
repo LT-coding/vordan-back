@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('company_name');
             $table->timestamp('verified')->nullable();
-            $table->string('avatar')->nullable();
-            $table->uuid('referral_code');
-            $table->bigInteger('referral')->default(0);
+            $table->string('logo')->nullable();
+            $table->timestamp('rejected_at')->nullable();
+            $table->string('rejected_reason')->nullable();
+            $table->foreignId('approved_by_id')->nullable()->constrained('admin_accounts');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

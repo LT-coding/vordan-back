@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use Illuminate\Support\Facades\Route;
@@ -15,3 +16,5 @@ Route::post('/reset-password', [NewPasswordController::class, 'store'])
                 ->middleware('guest');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+
+Route::patch('/password-change', [ChangePasswordController::class, 'store']);

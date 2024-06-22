@@ -14,7 +14,6 @@ Route::namespace('Admin')
         Route::controller(AdminWriteController::class)->group(function() {
             Route::post('/', 'store');
             Route::put('/{user}', 'update');
-            Route::patch('/{user}/role', 'updateRole');
             Route::delete('/{user}', 'delete')->middleware(['role:admin']);
         });
     });
